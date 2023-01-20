@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RecipiesService } from './recipies/recipies.service';
-import { RecipiesController } from './recipies/recipies.controller';
 import * as dotenv from 'dotenv';
+import { MongooseModule } from '@nestjs/mongoose';
+import { RecipieModule } from './recipie/recipie.module';
 dotenv.config()
 
 @Module({
-  imports: [],
-  controllers: [AppController, RecipiesController],
-  providers: [AppService, RecipiesService],
+  imports: [
+    MongooseModule.forRoot(process.env.MONGODB_URL),
+    RecipieModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
