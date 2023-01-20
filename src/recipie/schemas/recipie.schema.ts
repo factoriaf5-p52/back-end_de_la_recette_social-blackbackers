@@ -5,35 +5,35 @@ export type RecipieDocument = Recipie & Document;
 
 @Schema()
 export class Recipie {
-  @Prop()
-  name: string;
+	@Prop()
+	name: string;
 
 	@Prop()
-  description: string;
+	description: string;
 
 	@Prop()
-  author: string;
+	author: string;
 
 	@Prop()
 	avg_rating: number;
 
 	@Prop()
-  img: string;
+	img: string;
 
 	@Prop()
-  is_public: boolean;
+	is_public: boolean;
 
-	@Prop()
-  ingredients: Array<any>;
+	@Prop([Object])
+	ingredients: Array<any>;
 
 	@Prop()
 	meal_type: string;
 
 	@Prop()
-  country: string;
+	country: string;
 
 	@Prop()
-  coocking_time: number;
+	coocking_time: number;
 
 	@Prop()
 	difficulty: string;
@@ -44,7 +44,7 @@ export class Recipie {
 	@Prop()
 	food_type: string;
 
-	@Prop()
+	@Prop([Object])
 	comments: Array<any>;
 
 }
