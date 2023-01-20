@@ -5,7 +5,7 @@ export class CreateRecipieDto {
 	@ApiProperty( {example: 'Chocolate pie'})
 	name: string;
 
-	@ApiProperty( {example: 'Delicious chocolate pie'})
+	@ApiProperty( {example: 'Delicious chocolate pie with high sugar dose. First: cut onions in tiny slices. Second: Mix chocolate and onion. Third: let your pet taste it. Fourth: enjoy it.'})
 	description: string;
 
 	@ApiProperty( {example: 'John'})
@@ -41,7 +41,7 @@ export class CreateRecipieDto {
 	@ApiProperty( {example: 'Mediterranean'})
 	food_type: string;
 
-	@ApiProperty( {example: '[{ _id: ObjectId("2943823572034") }]'})
+	@ApiProperty( {example: '[{_id: ObjectId("2943823572034") }]'})
 	comments: Array<any>; //Substituir por CommentSchema cuando esté creado
 
 }

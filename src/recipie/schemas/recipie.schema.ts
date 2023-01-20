@@ -4,6 +4,27 @@ import { Document } from 'mongoose';
 export type RecipieDocument = Recipie & Document;
 
 @Schema()
+export class IngredientsContent {
+	@Prop()
+	_id: string;
+
+	@Prop()
+	qty: number;
+}
+
+@Schema()
+export class CommentsContent {
+	@Prop()
+	title: string;
+
+	@Prop()
+	comment: string;
+
+	@Prop()
+	id_user: string;
+}
+
+@Schema()
 export class Recipie {
 	@Prop()
 	name: string;
@@ -24,7 +45,7 @@ export class Recipie {
 	is_public: boolean;
 
 	@Prop([Object])
-	ingredients: Array<any>;
+	ingredients: IngredientsContent;
 
 	@Prop()
 	meal_type: string;
@@ -45,7 +66,7 @@ export class Recipie {
 	food_type: string;
 
 	@Prop([Object])
-	comments: Array<any>;
+	comments: CommentsContent;
 
 }
 

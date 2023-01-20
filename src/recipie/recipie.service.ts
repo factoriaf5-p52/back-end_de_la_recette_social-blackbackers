@@ -3,21 +3,25 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRecipieDto } from './dto/create-recipie.dto';
 import { UpdateRecipieDto } from './dto/update-recipie.dto';
-import { Recipie } from "./schemas/recipie.schema";
+import { Recipie, RecipieDocument } from "./schemas/recipie.schema";
 
 @Injectable()
 export class RecipieService {
 
     constructor( 
-    @InjectModel(Recipie.name) private readonly recipieModel: Model<Recipie>, 
+    @InjectModel(Recipie.name) private readonly recipieModel: Model<RecipieDocument>, 
   ) {}
 
   create(createRecipieDto: CreateRecipieDto) {
-    return 'This action adds a new recipie';
+    return this.recipieModel.create(createRecipieDto);
   }
 
-  findAll() {
-    return this.recipieModel.find();
+  async findAll(): Promise<any> {
+    const recipiesData = await this.recipieModel.find().exec();
+    if (!recipiesData || recipiesData.length == 0) {
+        console.log("Error: no data");
+    }
+    return recipiesData;
   }
 
   findOne(id: number) {
