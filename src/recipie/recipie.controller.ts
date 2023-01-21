@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
 import { RecipieService } from './recipie.service';
 import { CreateRecipieDto } from './dto/create-recipie.dto';
 import { UpdateRecipieDto } from './dto/update-recipie.dto';
@@ -8,8 +8,13 @@ export class RecipieController {
   constructor(private readonly recipieService: RecipieService) {}
 
   @Post()
-  create(@Body() createRecipieDto: CreateRecipieDto) {
-    return this.recipieService.create(createRecipieDto);
+  async create(@Res() res, @Body() createRecipieDto: CreateRecipieDto) {
+    const recipie = await this.recipieService.create(createRecipieDto);
+    return res.status(HttpStatus.OK).json({
+      message: 'Recipie successfully created',
+      recipie
+    });
+
   }
 
   @Get()

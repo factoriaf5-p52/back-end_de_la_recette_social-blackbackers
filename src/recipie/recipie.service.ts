@@ -12,11 +12,12 @@ export class RecipieService {
     @InjectModel(Recipie.name) private readonly recipieModel: Model<RecipieDocument>, 
   ) {}
 
-  create(createRecipieDto: CreateRecipieDto) {
-    return this.recipieModel.create(createRecipieDto);
+  async create(createRecipieDto: CreateRecipieDto) {
+    const newRecipie = new this.recipieModel(createRecipieDto);
+    return await newRecipie.save();
   }
 
-  async findAll(): Promise<any> {
+  async findAll(): Promise<Recipie[]> {
     const recipiesData = await this.recipieModel.find().exec();
     if (!recipiesData || recipiesData.length == 0) {
         console.log("Error: no data");

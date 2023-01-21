@@ -5,10 +5,10 @@ export type RecipieDocument = Recipie & Document;
 
 @Schema()
 export class IngredientsContent {
-	@Prop()
+	@Prop({required: true})
 	_id: string;
 
-	@Prop()
+	@Prop({required: true})
 	qty: number;
 }
 
@@ -26,13 +26,13 @@ export class CommentsContent {
 
 @Schema()
 export class Recipie {
-	@Prop()
+	@Prop({required: true})
 	name: string;
 
-	@Prop()
+	@Prop({required: true})
 	description: string;
 
-	@Prop()
+	@Prop({required: true, default: "Unknown"})
 	author: string;
 
 	@Prop()
@@ -41,7 +41,7 @@ export class Recipie {
 	@Prop()
 	img: string;
 
-	@Prop()
+	@Prop({required: true, default: true})
 	is_public: boolean;
 
 	@Prop([Object])
