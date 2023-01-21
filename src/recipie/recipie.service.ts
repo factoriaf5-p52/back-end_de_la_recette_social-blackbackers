@@ -33,11 +33,13 @@ export class RecipieService {
     return recipeData;
   }
 
-  update(id: number, updateRecipieDto: UpdateRecipieDto) {
-    return `This action updates a #${id} recipie`;
+  async update(id: string, updateRecipieDto: UpdateRecipieDto) {
+    const updatedRecipie = await this.recipieModel.findByIdAndUpdate(id,updateRecipieDto);
+    return updatedRecipie;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recipie`;
+  async remove(id: string) {
+    const removedRecipie = await this.recipieModel.findByIdAndDelete(id);
+    return removedRecipie;
   }
 }
