@@ -25,8 +25,12 @@ export class RecipieService {
     return recipiesData;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recipie`;
+  async findOne(id: string): Promise<Recipie> {
+    const recipeData = await this.recipieModel.findById(id);
+    if (!recipeData) {
+        console.log("Error: no data");
+    }
+    return recipeData;
   }
 
   update(id: number, updateRecipieDto: UpdateRecipieDto) {

@@ -7,7 +7,7 @@ import { UpdateRecipieDto } from './dto/update-recipie.dto';
 export class RecipieController {
   constructor(private readonly recipieService: RecipieService) {}
 
-  @Post()
+  @Post('/create')
   async create(@Res() res, @Body() createRecipieDto: CreateRecipieDto) {
     const recipie = await this.recipieService.create(createRecipieDto);
     return res.status(HttpStatus.OK).json({
@@ -17,14 +17,14 @@ export class RecipieController {
 
   }
 
-  @Get()
-  findAll() {
-    return this.recipieService.findAll();
+  @Get('/list')
+  async findAll() {
+    return await this.recipieService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.recipieService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.recipieService.findOne(id);
   }
 
   @Patch(':id')
