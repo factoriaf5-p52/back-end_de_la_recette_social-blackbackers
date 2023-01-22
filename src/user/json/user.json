@@ -1,0 +1,28 @@
+{
+    "fisrt_name": "Sergi",
+    "last_name": "Alsina",
+    "user_name": "SergiAl",
+    "email": "alolocosevivemejor@gmail.com",
+    "password": "qwerty1234",
+    "role": "registered",
+    "favorites": [
+        {}
+    ],
+    "address": "Bla, Barcelona",
+    "badges": [
+        {}
+    ],
+    "subscriptions_list": [
+        {}
+    ],
+    "notifications_list": [
+        {}
+    ],
+    "groups": [
+        {
+            "group_name": "Vegans",
+            "admin_id": "65sr4fg6edr65464fs654f",
+            "member_username": "SergiAl"
+        }
+    ]
+}
