@@ -1,16 +1,17 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type RecipieDocument = Recipie & Document;
+export type RecipeDocument = Recipe & Document;
 
 @Schema()
 export class IngredientsContent {
 	@Prop({required: true})
 	_id: string;
 
-	@Prop({required: true})
+	@Prop()
 	qty: number;
 }
+
 
 @Schema()
 export class CommentsContent {
@@ -25,7 +26,7 @@ export class CommentsContent {
 }
 
 @Schema()
-export class Recipie {
+export class Recipe {
 	@Prop({required: true})
 	name: string;
 
@@ -44,8 +45,8 @@ export class Recipie {
 	@Prop({required: true, default: true})
 	is_public: boolean;
 
-	@Prop([Object])
-	ingredients: IngredientsContent;
+	@Prop()
+	ingredients: IngredientsContent[];
 
 	@Prop()
 	meal_type: string;
@@ -70,4 +71,4 @@ export class Recipie {
 
 }
 
-export const RecipieSchema = SchemaFactory.createForClass(Recipie);
+export const RecipeSchema = SchemaFactory.createForClass(Recipe);

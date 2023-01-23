@@ -27,7 +27,7 @@ class CommentNested {
 	id_user: string;
 }
 
-export class CreateRecipieDto {
+export class CreateRecipeDto {
 
 	@ApiProperty( {example: 'Chocolate pie'})
 	@IsDefined()
@@ -86,7 +86,7 @@ export class CreateRecipieDto {
 	@IsString()
 	food_type: string;
 
-	@ApiProperty( {example: '[{ title:"Nice recipie", comment:"I love this kind of recipies, please more!", id_user: "2943823572034" }]'})
+	@ApiProperty( {example: '[{ title:"Nice recipe", comment:"I love this kind of recipies, please more!", id_user: "2943823572034" }]'})
 	@ValidateNested() 
 	@Type(() => CommentNested) 		
 	comments: CommentNested[];
