@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { GetRecipiesFilterDto } from './dto/filter-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe, RecipeDocument } from "./schemas/recipe.schema";
 
@@ -43,7 +44,7 @@ export class RecipeService {
     return removedRecipe;
   }
 
-  async findByFilter(queries) {
+  async findByFilter(queries: GetRecipiesFilterDto) {
 
     let recipies = await this.findAll();
 
@@ -61,7 +62,6 @@ export class RecipeService {
       recipies = recipies.filter( recipe => recipe.avg_rating == avg_rating);
     }    
 
-    
     if (is_public != undefined) {
       let is_publicBoolean = (is_public.toLowerCase() === "true");
       recipies = recipies.filter( recipe => recipe.is_public == is_publicBoolean);
@@ -89,14 +89,10 @@ export class RecipeService {
 
     if (ingredients) {
       let ingredientsArray = ingredients.split(',');
-      
       recipies = recipies.filter(({ ingredients }) =>
       ingredients.some(({ _id }) => ingredientsArray.includes(_id))
       );
-
-
     }
-
 
     console.log(recipies);
     return recipies;

@@ -75,11 +75,9 @@ export class RecipeController {
       coocking_time = Number(_coocking_time); 
     }    
 
-
     let queries = {name, author, avg_rating, is_public, meal_type, country, coocking_time, difficulty, views, food_type, ingredients};
 
     return await this.recipeService.findByFilter(queries);
-    // return queries;
 
   }
 

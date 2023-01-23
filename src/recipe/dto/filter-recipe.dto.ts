@@ -2,7 +2,7 @@ export class GetRecipiesFilterDto {
     name?: string;
     author?: string;
     avg_rating?: number;
-    is_public?: boolean;
+    is_public?: any;
     ingredients?: string;
     meal_type?: string;
     country?: string;
