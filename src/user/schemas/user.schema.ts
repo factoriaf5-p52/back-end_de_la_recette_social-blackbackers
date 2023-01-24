@@ -4,6 +4,31 @@ import { Document } from "mongoose";
 export type UserDocument = User & Document;
 
 @Schema()
+export class Favorites{
+    @Prop()
+    _id: string; 
+}
+
+@Schema()
+export class Badges{
+    @Prop()
+    name: string;
+}
+
+
+@Schema()
+export class Notification_list{
+    @Prop()
+    name: string;
+}
+
+@Schema()
+export class Groups{
+    @Prop()
+    name: string;
+}
+
+@Schema()
 export class User {
     @Prop()
     fisrt_name: string;
@@ -24,22 +49,19 @@ export class User {
     role: string;
 
     @Prop([Object])
-    favorites: Array<any>;
+    favorites: Array<Favorites>;
 
     @Prop()
     address: string;
 
     @Prop([Object])
-    badges: Array<any>;
+    badges: Array<Badges>;
 
     @Prop([Object])
-    subscriptions_list: Array<any>;
+    notifications_list: Array<Notification_list>;
 
     @Prop([Object])
-    notifications_list: Array<any>;
-
-    @Prop([Object])
-    groups: Array<any>;
+    groups: Array<Groups>;
 
 }
 

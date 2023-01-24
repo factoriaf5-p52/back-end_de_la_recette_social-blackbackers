@@ -6,23 +6,20 @@
     "password": "qwerty1234",
     "role": "registered",
     "favorites": [
-        {}
+        {"_id":"65465fetdr4hdg65b"},
+        {"_id":"65465fetdr4hdg65c"},
+        {"_id":"65465fetdr4hdg65d"}
     ],
-    "address": "Bla, Barcelona",
-    "badges": [
-        {}
-    ],
-    "subscriptions_list": [
-        {}
-    ],
+    "address": "c/Bla, Barcelona",
+    "badges": ["gold", "super-publisher","fast-publisher"],
     "notifications_list": [
-        {}
+        {
+            "_id":"65t4hg84reg4edr484"
+        }
     ],
     "groups": [
         {
-            "group_name": "Vegans",
-            "admin_id": "65sr4fg6edr65464fs654f",
-            "member_username": "SergiAl"
+            "_id":"654h4fdg54hdf654"
         }
     ]
 }

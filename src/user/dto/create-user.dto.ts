@@ -1,4 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Badges, Favorites, Groups, Notification_list } from "../schemas/user.schema";
+
+
 
 export class CreateUserDto {
 
@@ -21,20 +24,17 @@ export class CreateUserDto {
     role: string;
 
     @ApiProperty({example: '[{ObjectID: "2943823572034",}]'})
-    favorites: Array<string>;
+    favorites: Array<Favorites>;
 
     @ApiProperty({example: 'c/Bla, Barcelona'})
     adress: string;
 
     @ApiProperty({example: '[{badges: 3}]'})
-    badges: Array<string>;
-
-    @ApiProperty({example: ''})
-    subsciptions_list: Array<any>;
+    badges: Array<Badges>;
 
     @ApiProperty({example: '[{ _id: ObjectId("2943823572034") }]'})
-    notifications_list: Array<any>;
+    notifications_list: Array<Notification_list>;
 
     @ApiProperty({example: '[{ _id: ObjectId("2943823572034") }]'})
-    groups: Array<any>;
+    groups: Array<Groups>;
 }
