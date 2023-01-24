@@ -72,7 +72,7 @@ export class CreateRecipeDto {
 
 	@ApiProperty( {example: 30})
 	@IsNumber()
-	coocking_time: number;
+	cooking_time: number;
 
 	@ApiProperty( {example: 'Easy'})
 	@IsString()

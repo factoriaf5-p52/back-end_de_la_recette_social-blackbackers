@@ -54,7 +54,7 @@ export class RecipeController {
     @Query('is_public') is_public: boolean,
     @Query('meal_type') meal_type: string,
     @Query('country') country: string,
-    @Query('coocking_time') _coocking_time: number,
+    @Query('cooking_time') _cooking_time: number,
     @Query('difficulty') difficulty: string,
     @Query('views') _views: number,
     @Query('food_type') food_type: string,
@@ -63,7 +63,7 @@ export class RecipeController {
   ){
     let avg_rating = undefined;
     let views = undefined;
-    let coocking_time = undefined;
+    let cooking_time = undefined;
 
     if (_avg_rating) {
       avg_rating = Number(_avg_rating);
@@ -71,15 +71,56 @@ export class RecipeController {
     if (_views) {
       views = Number(_views); 
     }
-    if (_coocking_time) {
-      coocking_time = Number(_coocking_time); 
+    if (_cooking_time) {
+      cooking_time = Number(_cooking_time); 
     }    
 
-    let queries = {name, author, avg_rating, is_public, meal_type, country, coocking_time, difficulty, views, food_type, ingredients};
+    let queries = {name, author, avg_rating, is_public, meal_type, country, cooking_time, difficulty, views, food_type, ingredients};
 
     return await this.recipeService.findByFilter(queries);
 
   }
+
+  @Get('filter/name/:tag')
+  async findByName (@Param('tag') tag: string) {
+    return await this.recipeService.findByName(tag);
+  }
+  @Get('filter/author/:tag')
+  async findByAuthor (@Param('tag') tag: string) {
+    return await this.recipeService.findByAuthor(tag);
+  }
+  @Get('filter/av_rating/:tag')
+  async findByAv_rating (@Param('tag') tag: string) {
+    return await this.recipeService.findByAv_rating(tag);
+  }
+  @Get('filter/is_public/:tag')
+  async findByIs_public (@Param('tag') tag: string) {
+    return await this.recipeService.findByIs_public(tag);
+  }
+  @Get('filter/meal_type/:tag')
+  async findByMeal_type (@Param('tag') tag: string) {
+    return await this.recipeService.findByMeal_type(tag);
+  }
+  @Get('filter/country/:tag')
+  async findByCountry (@Param('tag') tag: string) {
+    return await this.recipeService.findByCountry(tag);
+  }
+  @Get('filter/cooking_time/:tag')
+  async findByCooking_time (@Param('tag') tag: string) {
+    return await this.recipeService.findByCooking_time(tag);
+  }
+  @Get('filter/difficulty/:tag')
+  async findByDifficulty (@Param('tag') tag: string) {
+    return await this.recipeService.findByDifficulty(tag);
+  }
+  @Get('filter/views/:tag')
+  async findByViews (@Param('tag') tag: string) {
+    return await this.recipeService.findByViews(tag);
+  }
+  @Get('filter/food_type/:tag')
+  async findByFood_type (@Param('tag') tag: string) {
+    return await this.recipeService.findByFood_type(tag);
+  }                  
 
   @Get('/top10/views')
   async findMostViewed() {

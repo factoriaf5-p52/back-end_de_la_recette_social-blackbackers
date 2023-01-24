@@ -6,7 +6,7 @@ export class GetRecipiesFilterDto {
     ingredients?: string;
     meal_type?: string;
     country?: string;
-    coocking_time?: number;
+    cooking_time?: number;
     difficulty?: string;
     views?: number;
     food_type?: string;

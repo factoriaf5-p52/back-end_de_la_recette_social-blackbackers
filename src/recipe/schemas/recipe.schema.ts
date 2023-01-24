@@ -55,7 +55,7 @@ export class Recipe {
 	country: string;
 
 	@Prop()
-	coocking_time: number;
+	cooking_time: number;
 
 	@Prop()
 	difficulty: string;
