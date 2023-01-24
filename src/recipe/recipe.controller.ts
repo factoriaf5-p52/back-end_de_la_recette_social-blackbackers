@@ -46,7 +46,7 @@ export class RecipeController {
     });    
   }
 
-  @Get()
+  @Get('/filter/by')
   async findByFilter(
     @Query('name') name: string,
     @Query('author') author: string,

@@ -100,7 +100,6 @@ export class RecipeService {
       );
     }
 
-    console.log(recipies);
     return recipies;
 
   }
