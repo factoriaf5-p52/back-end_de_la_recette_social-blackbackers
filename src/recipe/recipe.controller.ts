@@ -81,6 +81,9 @@ export class RecipeController {
 
   }
 
-
+  @Get('/top10/views')
+  async findMostViewed() {
+    return await this.recipeService.findMostViewed();
+  }
 
 }

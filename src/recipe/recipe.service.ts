@@ -5,7 +5,7 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { GetRecipiesFilterDto } from './dto/filter-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe, RecipeDocument } from "./schemas/recipe.schema";
-
+const mongoose = require('mongoose');
 @Injectable()
 export class RecipeService {
 
@@ -19,7 +19,7 @@ export class RecipeService {
   }
 
   async findAll(): Promise<Recipe[]> {
-    const recipiesData = await this.recipeModel.find().exec();
+    const recipiesData = await this.recipeModel.find();
     if (!recipiesData || recipiesData.length == 0) {
         console.log("Error: no data");
     }
@@ -27,11 +27,17 @@ export class RecipeService {
   }
 
   async findOne(id: string): Promise<Recipe> {
-    const recipeData = await this.recipeModel.findById(id);
+    if (mongoose.Types.ObjectId.isValid(id)) {
+          const recipeData = await this.recipeModel.findById(id);
     if (!recipeData) {
         console.log("Error: no data");
     }
     return recipeData;
+    }else {
+      console.log("Error: the id is not in a valid format");
+    }
+
+
   }
 
   async update(id: string, updateRecipeDto: UpdateRecipeDto) {
@@ -98,6 +104,15 @@ export class RecipeService {
     return recipies;
 
   }
+
+  async findMostViewed(): Promise<Recipe[]>{
+    const recipiesData = await this.recipeModel.find().sort({"views":-1}).limit(10);
+    if (!recipiesData || recipiesData.length == 0) {
+        console.log("Error: no data");
+    }
+    return recipiesData;
+  }
+
 
   
 }
