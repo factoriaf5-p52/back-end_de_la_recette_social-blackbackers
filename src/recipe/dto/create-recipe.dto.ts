@@ -1,30 +1,32 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsBoolean, IsNumber, ValidateNested, IsDefined, IsHexadecimal } from "class-validator";
 import { Type } from 'class-transformer';
+import mongoose from 'mongoose';
 
 
 class IngredientNested {
 	@IsDefined()	
-    @IsString()
-    _id: string;
+    @IsHexadecimal()
+    _id: {
+		type: mongoose.Types.ObjectId;
+	}
 
 	@IsDefined()	
 	@IsNumber()
 	qty: number;
 }
 
-class CommentNested {
-	@IsDefined()	
+class CommentNested {	
     @IsString()
     title: string;
-
-	@IsDefined()	
+	
     @IsString()
     comment: string;	
 
-	@IsDefined()	
 	@IsHexadecimal()
-	id_user: string;
+	id_user:  {
+		type: mongoose.Types.ObjectId;
+	}
 }
 
 export class CreateRecipeDto {

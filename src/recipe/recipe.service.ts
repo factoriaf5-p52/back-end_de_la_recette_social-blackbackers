@@ -96,7 +96,7 @@ export class RecipeService {
     if (ingredients) {
       let ingredientsArray = ingredients.split(',');
       recipies = recipies.filter(({ ingredients }) =>
-      ingredients.some(({ _id }) => ingredientsArray.includes(_id))
+      ingredients.some(({ _id }) => ingredientsArray.includes(_id.toString()))
       );
     }
 
