@@ -1,0 +1,39 @@
+PATCH http://localhost:3000/api/v1/recipe/modify/63cfc3e8b75eb2b01d1f2466 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Chocolate pie new",
+  "description": "Delicious orange pie with high sugar dose. First: cut onions in tiny slices. Second: Mix orange and onion. Third: let your pet taste it. Fourth: enjoy it.",
+  "author": "123sdfsdf234dfas4",
+  "avg_rating": 8,
+  "img": "assets/images/orange-pie.png",
+  "is_public": true,
+  "ingredients": [
+    {
+      "_id": "555555555",
+      "qty": 300
+    },
+    {
+      "_id": "666666666666",
+      "qty": 100
+    }
+  ],
+  "meal_type": "snack",
+  "country": "Chile",
+  "cooking_time": 60,
+  "difficulty": "easy",
+  "views": 9741,
+  "food_type": "desert",
+  "comments": [
+    {
+      "title": "Esperaba más",
+      "comment": "Nisi officia fugiat id nulla laboris ex. Sit laboris culpa occaecat occaecat aliquip dolor non excepteur reprehenderit.",
+      "id_user": "63cb0277ee58877e63e36fcc"
+    },
+    {
+      "title": "Buenisimo",
+      "comment": "Nisi officia fugiat id nulla laboris ex. Sit laboris culpa occaecat occaecat aliquip dolor non excepteur reprehenderit.",        
+      "id_user": "63cb0277ee58877e63e36fcc"
+    }
+  ]
+}

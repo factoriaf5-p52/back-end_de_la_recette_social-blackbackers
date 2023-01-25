@@ -1,0 +1,2 @@
+GET http://localhost:3000/api/v1/recipe/63cfc3e8b75eb2b01d1f2466 HTTP/1.1
+content-type: application/json
