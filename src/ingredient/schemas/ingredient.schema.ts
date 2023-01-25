@@ -1,14 +1,15 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { IsObject } from 'class-validator';
+import mongoose, { Document } from 'mongoose';
 
 export type IngredientDocument = Ingredient & Document;
 
 @Schema()
 export class Ingredient {
-    @Prop()
+    @Prop({required: true})
 	name: string;
 
-	@Prop()
+	@Prop({required: true})
 	measure_unit: string;
 }
 
