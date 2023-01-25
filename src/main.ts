@@ -7,8 +7,8 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1');
   const options = new DocumentBuilder()
-    .setTitle('API BOOK WITH MONGODB')
-    .setDescription('API rest para libros en mongodb')
+    .setTitle('API RECIPIES WITH MONGODB')
+    .setDescription('API rest for recipies in mongodb')
     .setVersion('1.0')
     .build()
     const document = SwaggerModule.createDocument(app, options);
