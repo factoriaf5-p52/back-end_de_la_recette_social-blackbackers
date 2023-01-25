@@ -5,6 +5,10 @@ import * as dotenv from 'dotenv';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RecipieModule } from './recipie/recipie.module';
 import { IngredientModule } from './ingredient/ingredient.module';
+import { RecipieModule } from './recipie/recipie.module';
+import { UserModule } from './user/user.module';
+import { NotificationsModule } from './notifications/notifications.module';
+
 dotenv.config()
 
 @Module({
@@ -12,6 +16,8 @@ dotenv.config()
     MongooseModule.forRoot(process.env.MONGODB_URL),
     RecipieModule,
     IngredientModule,
+    UserModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
