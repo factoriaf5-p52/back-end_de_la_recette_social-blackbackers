@@ -8,13 +8,17 @@ import { Ingredient } from "./schemas/ingredient.schema";
 @Injectable()
 export class IngredientService {
   
+  
+
   constructor( 
-    @InjectModel(Ingredient.name) private readonly ingredientModel: Model<Ingredient>, 
+    @InjectModel(Ingredient.name) 
+    private readonly ingredientModel: Model<Ingredient>, 
   ) {} 
   
-  
-  create(createIngredientDto: CreateIngredientDto) {
-    return 'This action adds a new ingredient';
+
+  async create(createIngredientDto: CreateIngredientDto) {
+    const newIngredient = new this.ingredientModel(createIngredientDto);
+    return await newIngredient.save();
   }
 
   findAll() {
