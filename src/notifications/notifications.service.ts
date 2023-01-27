@@ -5,6 +5,7 @@ import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
 import { Notification } from './schemas/notification.schema';
 
+
 @Injectable()
 export class NotificationService {
   constructor(
@@ -41,7 +42,5 @@ if (!notificationsData || notificationsData.length == 0) {
     const removedNotification = await this.notificationModel.findByIdAndDelete(id)
     return removedNotification;
   }
-
-  
 
 }

@@ -12,6 +12,7 @@ export class CreateNotificationDto {
 
     @ApiProperty( {example: 'New like'})
 	title: string;
+	
 	@ApiProperty( {example: 'Sergi liked your recipe'})
 	text_field: string;
 
