@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Query, ParseArrayPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Query, UseGuards } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Response } from 'express';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ParseObjectIdPipe } from 'src/utilities/parse-object-id-pipe.pipe';
+import { CreateCommentDto } from './dto/add-comment.dto';
 
 @Controller('recipe')
 export class RecipeController {
@@ -28,14 +30,14 @@ export class RecipeController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
     return await this.recipeService.findOne(id);
   }
   
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Patch('modify/:id')
-  async update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto, @Res() res: Response) {
+  async update(@Param('id', ParseObjectIdPipe) id: string, @Body() updateRecipeDto: UpdateRecipeDto, @Res() res: Response) {
     const updatedRecipe = await this.recipeService.update(id, updateRecipeDto);
     return res.status(HttpStatus.OK).json({
       message: 'Recipe successfully updated',
@@ -46,7 +48,7 @@ export class RecipeController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
-  async remove(@Param('id') id: string, @Res() res: Response) {
+  async remove(@Param('id', ParseObjectIdPipe) id: string, @Res() res: Response) {
     const deletededRecipe = await this.recipeService.remove(id);
     return res.status(HttpStatus.OK).json({
       message: 'Recipe successfully deleted',
@@ -134,6 +136,14 @@ export class RecipeController {
   @Get('/top10/views')
   async findMostViewed() {
     return await this.recipeService.findMostViewed();
+  }
+
+  @Post(':id/comment') 
+  async addComment(
+    @Param('id', ParseObjectIdPipe) id: string, 
+    @Body() comment: CreateCommentDto, 
+  ) {
+    return this.recipeService.addComment(id, comment); 
   }
 
 }
