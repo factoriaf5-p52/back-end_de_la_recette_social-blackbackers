@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Query, ParseArrayPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus, Query, ParseArrayPipe, UseGuards } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Response } from 'express';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('recipe')
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   async create(@Res() res: Response, @Body() createRecipeDto: CreateRecipeDto) {
     const recipe = await this.recipeService.create(createRecipeDto);
@@ -27,7 +31,9 @@ export class RecipeController {
   async findOne(@Param('id') id: string) {
     return await this.recipeService.findOne(id);
   }
-
+  
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Patch('modify/:id')
   async update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto, @Res() res: Response) {
     const updatedRecipe = await this.recipeService.update(id, updateRecipeDto);
@@ -37,6 +43,8 @@ export class RecipeController {
     });
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   async remove(@Param('id') id: string, @Res() res: Response) {
     const deletededRecipe = await this.recipeService.remove(id);
@@ -61,6 +69,7 @@ export class RecipeController {
     @Query('ingredients') ingredients: string
 
   ){
+
     let avg_rating = undefined;
     let views = undefined;
     let cooking_time = undefined;
@@ -77,7 +86,7 @@ export class RecipeController {
 
     let queries = {name, author, avg_rating, is_public, meal_type, country, cooking_time, difficulty, views, food_type, ingredients};
 
-    return await this.recipeService.findByFilter(queries);
+    return await this.recipeService.findByFilter(queries);   
 
   }
 

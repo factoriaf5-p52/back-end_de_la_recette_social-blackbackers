@@ -5,7 +5,7 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { GetRecipiesFilterDto } from './dto/filter-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe, RecipeDocument } from "./schemas/recipe.schema";
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 @Injectable()
 export class RecipeService {
 
@@ -28,7 +28,7 @@ export class RecipeService {
 
   async findOne(id: string): Promise<Recipe> {
     if (mongoose.Types.ObjectId.isValid(id)) {
-          const recipeData = await this.recipeModel.findById(id);
+          const recipeData = await this.recipeModel.findById(id).populate('ingredients').exec();
     if (!recipeData) {
         console.log("Error: no data");
     }
@@ -93,12 +93,12 @@ export class RecipeService {
       recipies = recipies.filter( recipe => recipe.food_type === food_type);
     }   
 
-    if (ingredients) {
-      let ingredientsArray = ingredients.split(',');
-      recipies = recipies.filter(({ ingredients }) =>
-      ingredients.some(({ _id }) => ingredientsArray.includes(_id.toString()))
-      );
-    }
+    // if (ingredients) {
+    //   let ingredientsArray = ingredients.split(',');
+    //   recipies = recipies.filter(({ ingredients }) =>
+    //   ingredients.some(({ _id }) => ingredientsArray.includes(_id.toString()))
+    //   );
+    // }
 
     return recipies;
 

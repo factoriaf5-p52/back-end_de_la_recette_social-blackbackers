@@ -1,6 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { IsObject } from 'class-validator';
 import mongoose, { Document } from 'mongoose';
+import { Ingredient } from '../../ingredient/schemas/ingredient.schema';
 
 export type RecipeDocument = Recipe & Document;
 
@@ -24,10 +25,6 @@ export class CommentsContent {
 	@Prop()
 	comment: string;
 
-	@Prop({type: IsObject})
-	id_user: {
-		type: mongoose.Types.ObjectId;
-	}
 }
 
 @Schema()
@@ -50,8 +47,8 @@ export class Recipe {
 	@Prop({required: true, default: true})
 	is_public: boolean;
 
-	@Prop()
-	ingredients: IngredientsContent[];
+	@Prop({type: mongoose.Types.ObjectId, ref:'Ingredient'})
+	ingredients: [Ingredient];
 
 	@Prop()
 	meal_type: string;
@@ -72,7 +69,7 @@ export class Recipe {
 	food_type: string;
 
 	@Prop([Object])
-	comments: CommentsContent;
+	comments: [CommentsContent];
 
 }
 
