@@ -7,6 +7,9 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ParseObjectIdPipe } from 'src/utilities/parse-object-id-pipe.pipe';
 import { CreateCommentDto } from './dto/add-comment.dto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/models/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('recipe')
 export class RecipeController {
@@ -133,6 +136,9 @@ export class RecipeController {
     return await this.recipeService.findByFood_type(tag);
   }                  
 
+  @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/top10/views')
   async findMostViewed() {
     return await this.recipeService.findMostViewed();
