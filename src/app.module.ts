@@ -8,6 +8,7 @@ import { GroupModule } from './group/group.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { UserModule } from './user/user.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ dotenv.config()
     IngredientModule,
     UserModule,
     NotificationsModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
