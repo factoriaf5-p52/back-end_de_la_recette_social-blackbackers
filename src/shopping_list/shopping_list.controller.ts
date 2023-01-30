@@ -2,14 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ShoppingListService } from './shopping_list.service';
 import { CreateShoppingListDto } from './dto/create-shopping_list.dto';
 import { UpdateShoppingListDto } from './dto/update-shopping_list.dto';
+import { ParseObjectIdPipe } from 'src/utilities/parse-object-id-pipe.pipe';
 
 @Controller('shopping-list')
 export class ShoppingListController {
   constructor(private readonly shoppingListService: ShoppingListService) {}
 
   @Post()
-  create(@Body() createShoppingListDto: CreateShoppingListDto) {
-    return this.shoppingListService.create(createShoppingListDto);
+  addIngredient(@Body() createShoppingListDto: CreateShoppingListDto) {
+    return this.shoppingListService.addIngredient(createShoppingListDto);
   }
 
   @Get()
@@ -18,17 +19,17 @@ export class ShoppingListController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shoppingListService.findOne(+id);
+  async findOne(@Param('id', ParseObjectIdPipe) id: string) {
+    return this.shoppingListService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateShoppingListDto: UpdateShoppingListDto) {
-    return this.shoppingListService.update(+id, updateShoppingListDto);
+    return this.shoppingListService.update(Number(id), updateShoppingListDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.shoppingListService.remove(+id);
+    return this.shoppingListService.remove(Number(id));
   }
 }
