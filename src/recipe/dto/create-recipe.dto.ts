@@ -24,7 +24,7 @@ class CommentNested {
     comment: string;	
 
 	@IsHexadecimal()
-	id_user:  {
+	author:  {
 		type: mongoose.Types.ObjectId;
 	}
 }

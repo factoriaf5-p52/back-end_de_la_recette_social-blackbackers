@@ -9,12 +9,14 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/v1');
   const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('API RECIPIES WITH MONGODB')
     .setDescription('API rest for recipies in mongodb')
     .setVersion('1.0')
     .build()
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);
+
 
 
   await app.listen(process.env.PORT);

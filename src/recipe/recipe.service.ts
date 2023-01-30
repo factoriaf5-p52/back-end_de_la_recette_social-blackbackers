@@ -5,7 +5,7 @@ import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { GetRecipiesFilterDto } from './dto/filter-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { Recipe, RecipeDocument } from "./schemas/recipe.schema";
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 @Injectable()
 export class RecipeService {
 
@@ -19,7 +19,10 @@ export class RecipeService {
   }
 
   async findAll(): Promise<Recipe[]> {
-    const recipiesData = await this.recipeModel.find();
+    const recipiesData = await this.recipeModel.find()
+      .populate({ path: 'ingredients._id' })
+      .setOptions({ sanitizeFilter: true })
+      .exec();
     if (!recipiesData || recipiesData.length == 0) {
         console.log("Error: no data");
     }
@@ -28,7 +31,9 @@ export class RecipeService {
 
   async findOne(id: string): Promise<Recipe> {
     if (mongoose.Types.ObjectId.isValid(id)) {
-          const recipeData = await this.recipeModel.findById(id);
+          const recipeData = await this.recipeModel.findById(id)
+          .populate({ path: 'ingredients._id' })
+          .exec();
     if (!recipeData) {
         console.log("Error: no data");
     }
@@ -93,12 +98,12 @@ export class RecipeService {
       recipies = recipies.filter( recipe => recipe.food_type === food_type);
     }   
 
-    if (ingredients) {
-      let ingredientsArray = ingredients.split(',');
-      recipies = recipies.filter(({ ingredients }) =>
-      ingredients.some(({ _id }) => ingredientsArray.includes(_id.toString()))
-      );
-    }
+    // if (ingredients) {
+    //   let ingredientsArray = ingredients.split(',');
+    //   recipies = recipies.filter(({ ingredients }) =>
+    //   ingredients.some(({ _id }) => ingredientsArray.includes(_id.toString()))
+    //   );
+    // }
 
     return recipies;
 
@@ -180,6 +185,13 @@ export class RecipeService {
         console.log("Error: no data");
     }
     return recipiesData;
+  }
+
+  async addComment(id: string, comment: any) { 
+    let recipe: RecipeDocument = await this.recipeModel.findById(id); 
+    recipe.comments.push(comment); 
+    recipe.save(); 
+    return recipe;
   }
 
   
