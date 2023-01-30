@@ -13,14 +13,18 @@ export class ShoppingListService {
   ) {}
 
   async create(createShoppingListDto: CreateShoppingListDto) {
-    const newRecipe = new this.shoppingListModel(createShoppingListDto);
-    return await newRecipe.save();
+    const newShoppingList = new this.shoppingListModel(createShoppingListDto);
+    return await newShoppingList.save();
   }
 
-  async findAll() {
-
-    return `This action returns all shoppingList`;
+  async findAll(): Promise<ShoppingList[]> {
+    const shoppingListData = await this.shoppingListModel.find();
+    if (!shoppingListData || shoppingListData.length == 0) {
+        console.log("Error: no data");
+    }
+    return shoppingListData;
   }
+
 
   findOne(id: number) {
     const newShoppingList = new this.shoppingListModel(CreateShoppingListDto);
