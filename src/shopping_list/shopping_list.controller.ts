@@ -1,20 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, UseGuards, Request  } from '@nestjs/common';
 import { ShoppingListService } from './shopping_list.service';
-import { CreateShoppingListDto } from './dto/create-shopping_list.dto';
+import { UpsertShoppingListDto } from './dto/upsert-shopping_list.dto';
 import { UpdateShoppingListDto } from './dto/update-shopping_list.dto';
 import { ParseObjectIdPipe } from 'src/utilities/parse-object-id-pipe.pipe';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CompareIdGuard } from 'src/auth/guards/compare-id.guard';
 
 @Controller('shopping-list')
 export class ShoppingListController {
   constructor(private readonly shoppingListService: ShoppingListService) {}
 
+  @UseGuards(JwtAuthGuard, CompareIdGuard)
   @Post()
-  addIngredient(@Body() createShoppingListDto: CreateShoppingListDto) {
-    return this.shoppingListService.addIngredient(createShoppingListDto);
+  async upsertShoppingList(@Body() UpsertShoppingListDto: UpsertShoppingListDto) {
+    return this.shoppingListService.upsertShoppingList(UpsertShoppingListDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.shoppingListService.findAll();
   }
 
@@ -24,12 +27,12 @@ export class ShoppingListController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShoppingListDto: UpdateShoppingListDto) {
+  async update(@Param('id') id: string, @Body() updateShoppingListDto: UpdateShoppingListDto) {
     return this.shoppingListService.update(Number(id), updateShoppingListDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.shoppingListService.remove(Number(id));
   }
 }

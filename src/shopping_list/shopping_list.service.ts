@@ -1,25 +1,25 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
-import { CreateShoppingListDto } from './dto/create-shopping_list.dto';
+import { UpsertShoppingListDto } from './dto/upsert-shopping_list.dto';
 import { UpdateShoppingListDto } from './dto/update-shopping_list.dto';
 import { ShoppingList } from './schema/shopping_list.schema';
-import { Request } from 'express';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class ShoppingListService {
 
   constructor( 
-    @InjectModel(ShoppingList.name) private readonly shoppingListModel: Model<ShoppingList>
+    @InjectModel(ShoppingList.name) private readonly shoppingListModel: Model<ShoppingList>,
+    private jwtAuthService:JwtService
   ) {}
 
-  async addIngredient(createShoppingListDto: CreateShoppingListDto) {
-   
-    const shoppingListFound = await this.findOne(createShoppingListDto._id.toString());
-    
-    const newShoppingList = new this.shoppingListModel(createShoppingListDto);
-    return await newShoppingList.save();
+  async upsertShoppingList(upsertShoppingListDto: UpsertShoppingListDto) {
+
+    const shoppingListFound = await this.shoppingListModel.find({'ingredients.ingredient':'63d0f9903dccc038d38d416c'});
+    return shoppingListFound;
+    // const shoppingListUpdated = await this.shoppingListModel.findOneAndUpdate();
+
   }
 
   async findAll(): Promise<ShoppingList[]> {
