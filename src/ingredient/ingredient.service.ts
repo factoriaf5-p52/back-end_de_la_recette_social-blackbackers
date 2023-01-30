@@ -6,9 +6,7 @@ import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { Ingredient } from "./schemas/ingredient.schema";
 
 @Injectable()
-export class IngredientService {
-  
-  
+export class IngredientService { 
 
   constructor( 
     @InjectModel(Ingredient.name) 
