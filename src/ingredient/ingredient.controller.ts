@@ -44,6 +44,9 @@ export class IngredientController {
     });
   }
 
+  @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('delete/:id')
   async remove(@Param('id') id: string, @Res() res: Response) {
     const deletededIngredient = await this.ingredientService.remove(id);
