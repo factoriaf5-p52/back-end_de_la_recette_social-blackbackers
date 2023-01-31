@@ -6,17 +6,14 @@ export type GroupDocument = Group & Document;
 
 @Schema()
 export class Group {
-  @Prop()
-  name: string;
+ 	@Prop()
+      group_name: string;
 
 	@Prop()
-  group_name: string;
+      admin_id: string;
 
 	@Prop()
-  admin_id: internal;
-
-	@Prop()
-	member_username: string;
+	  member_username: string;
 
 }
 

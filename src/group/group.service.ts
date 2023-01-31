@@ -1,32 +1,58 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { from } from 'rxjs';
 import { CreateGroupDto } from './dto/create-group.dto';
-import { GetGroupFilterDto } from './dto/filter-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group, GroupDocument } from "./schemas/group.schema";
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 @Injectable()
 export class GroupService {
-  
-  create(createGroupDto: CreateGroupDto) {
-    return 'This action adds a new group';
+
+  constructor( 
+    @InjectModel(Group.name) private readonly groupModel: Model<Group>, 
+  ) {}
+
+  async create(createGroupDto: CreateGroupDto) {
+    const newGroup = new this.groupModel(createGroupDto);
+    return await newGroup.save();
   }
 
-  findAll() {
-    return `This action returns all group`;
+  async findAll(): Promise<Group[]> {
+    const groupsData = await this.groupModel.find()
+      .populate({ path: 'recepies._id' })
+      .setOptions({ sanitizeFilter: true })
+      .exec();
+    if (!groupsData || groupsData.length == 0) {
+        console.log("Error: no data");
+    }
+    return groupsData;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} group`;
+
+  async findOne(id: string): Promise<Group> {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        const groupData = await this.groupModel.findById(id)
+      
+      if (!groupData) {
+          console.log("Error: no data");
+      }
+      return groupData;
+    }
+      else {
+          console.log("Error: the id is not in a valid format");
+      }
   }
 
-  update(id: number, updateGroupDto: UpdateGroupDto) {
-    return `This action updates a #${id} group`;
+
+  async update(id: string, updateGroupDto: UpdateGroupDto) {
+    const updatedGroup = await this.groupModel.findByIdAndUpdate(id,updateGroupDto);
+    return updatedGroup;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} group`;
+  async remove(id: string) {
+    const removedGroup = await this.groupModel.findByIdAndDelete(id);
+    return removedGroup;
   }
+
+
 }

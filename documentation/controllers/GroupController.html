@@ -500,17 +500,17 @@ export class GroupController {
 
   @Get(&#x27;:id&#x27;)
   findOne(@Param(&#x27;id&#x27;) id: string) {
-    return this.groupService.findOne(+id);
+    return this.groupService.findOne(id);
   }
 
   @Patch(&#x27;:id&#x27;)
   update(@Param(&#x27;id&#x27;) id: string, @Body() updateGroupDto: UpdateGroupDto) {
-    return this.groupService.update(+id, updateGroupDto);
+    return this.groupService.update(id, updateGroupDto);
   }
 
   @Delete(&#x27;:id&#x27;)
   remove(@Param(&#x27;id&#x27;) id: string) {
-    return this.groupService.remove(+id);
+    return this.groupService.remove(id);
   }
 }
 </code></pre>
