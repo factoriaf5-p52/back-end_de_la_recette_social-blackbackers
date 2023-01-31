@@ -16,7 +16,8 @@ export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/create')
   async create(@Res() res: Response, @Body() createRecipeDto: CreateRecipeDto) {
     const recipe = await this.recipeService.create(createRecipeDto);
@@ -38,7 +39,8 @@ export class RecipeController {
   }
   
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch('modify/:id')
   async update(@Param('id', ParseObjectIdPipe) id: string, @Body() updateRecipeDto: UpdateRecipeDto, @Res() res: Response) {
     const updatedRecipe = await this.recipeService.update(id, updateRecipeDto);
@@ -48,8 +50,9 @@ export class RecipeController {
     });
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+   @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('delete/:id')
   async remove(@Param('id', ParseObjectIdPipe) id: string, @Res() res: Response) {
     const deletededRecipe = await this.recipeService.remove(id);
@@ -136,14 +139,14 @@ export class RecipeController {
     return await this.recipeService.findByFood_type(tag);
   }                  
 
-  @ApiBearerAuth()
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/top10/views')
   async findMostViewed() {
     return await this.recipeService.findMostViewed();
   }
 
+  @ApiBearerAuth()
+  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post(':id/comment') 
   async addComment(
     @Param('id', ParseObjectIdPipe) id: string, 
