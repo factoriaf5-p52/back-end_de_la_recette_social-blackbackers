@@ -1,8 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { IsObject } from 'class-validator';
 import mongoose, { Document } from 'mongoose';
 import { RecipeComment } from 'src/recipe/schemas/comment.schema';
-import { Ingredient } from '../../ingredient/schemas/ingredient.schema';
 
 export type RecipeDocument = Recipe & Document;
 

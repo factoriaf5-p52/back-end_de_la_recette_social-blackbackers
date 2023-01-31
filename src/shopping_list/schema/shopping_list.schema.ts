@@ -1,21 +1,17 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { ObjectId } from "mongoose";
-import { Ingredient, IngredientSchema } from "src/ingredient/schemas/ingredient.schema";
-import { UserSchema } from "src/user/schemas/user.schema";
 
 @Schema()
 export class ShoppingList {
-    @Prop({type: Object})
+
+	@Prop({type: mongoose.Types.ObjectId, ref: 'User'})
 	_id: ObjectId;
 
-	@Prop({type: Date})
-	indgredient_id: [{type: Schema.Types.ObjectId, ref: 'ingredient'}]; 
-
-	@Prop()
-	user_id: [{type: Schema.Types.ObjectId, ref: 'user'}];
-
-	@Prop()
-	quantity: number;
+	@Prop(Array<any>)
+	ingredients: [{
+		ingredient: {type: mongoose.Types.ObjectId, ref:'Ingredient'},
+		quantity: number
+	}] 
 }
 
 
