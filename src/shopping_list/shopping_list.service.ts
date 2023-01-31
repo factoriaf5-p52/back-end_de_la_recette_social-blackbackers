@@ -94,7 +94,7 @@ export class ShoppingListService {
   }
 
   async remove(id: number) {
-    const removedShoppingList = await this.shoppingListModel.findByIdAndDelete(id);
+    const removedShoppingList = await this.shoppingListModel.deleteOne({id : id});
     return removedShoppingList;
   }
 }
