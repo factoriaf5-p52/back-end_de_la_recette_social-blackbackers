@@ -1,34 +1,33 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { IsObject } from 'class-validator';
 import mongoose, { Document } from 'mongoose';
+import { RecipeComment } from 'src/recipe/schemas/comment.schema';
 
 export type RecipeDocument = Recipe & Document;
 
-@Schema()
-export class IngredientsContent {
-	@Prop({required: true, type: IsObject})
-	_id: {
-		type: mongoose.Types.ObjectId;
-	}
+// @Schema()
+// export class IngredientsContent {
+// 	@Prop({required: true, type: IsObject})
+// 	_id: {
+// 		type: mongoose.Types.ObjectId;
+// 	}
 
-	@Prop()
-	qty: number;
-}
+// 	@Prop()
+// 	qty: number;
+// }
 
 
-@Schema()
-export class CommentsContent {
-	@Prop()
-	title: string;
+// @Schema()
+// export class CommentsContent {
+// 	@Prop()
+// 	title: string;
 
-	@Prop()
-	comment: string;
+// 	@Prop()
+// 	comment: string;
 
-	@Prop({type: IsObject})
-	id_user: {
-		type: mongoose.Types.ObjectId;
-	}
-}
+// 	@Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User'})
+// 	author_id: User;
+
+// }
 
 @Schema()
 export class Recipe {
@@ -50,8 +49,8 @@ export class Recipe {
 	@Prop({required: true, default: true})
 	is_public: boolean;
 
-	@Prop()
-	ingredients: IngredientsContent[];
+	@Prop({type: mongoose.Types.ObjectId, ref:'Ingredient'})
+	ingredients: any[];
 
 	@Prop()
 	meal_type: string;
@@ -71,8 +70,8 @@ export class Recipe {
 	@Prop()
 	food_type: string;
 
-	@Prop([Object])
-	comments: CommentsContent;
+	@Prop([RecipeComment])
+	comments: RecipeComment[];
 
 }
 

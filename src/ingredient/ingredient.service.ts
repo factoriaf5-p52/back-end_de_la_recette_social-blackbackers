@@ -7,6 +7,7 @@ import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { Ingredient, IngredientDocument } from "./schemas/ingredient.schema";
 const mongoose = require('mongoose');
 @Injectable()
+
 export class IngredientService {
   
     constructor( 

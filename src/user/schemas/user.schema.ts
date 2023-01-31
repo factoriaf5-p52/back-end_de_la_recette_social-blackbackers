@@ -1,5 +1,6 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+import { Role } from "src/auth/models/role.enum";
 
 export type UserDocument = User & Document;
 
@@ -30,23 +31,23 @@ export class Groups{
 
 @Schema()
 export class User {
-    @Prop()
+    @Prop({ required: true })
     fisrt_name: string;
 
     @Prop()
     last_name: string;
 
-    @Prop()
+    @Prop({ required: true })
     user_name: string;
 
-    @Prop()
+    @Prop({ required: true })
     email: string;
 
-    @Prop()
+    @Prop({ required: true })
     password: string;
 
-    @Prop()
-    role: string;
+    @Prop({ required: true, default: Role.USER })
+    role: Role;
 
     @Prop([Object])
     favorites: Array<Favorites>;
