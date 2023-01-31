@@ -5,6 +5,7 @@ import { UpsertShoppingListDto } from './dto/upsert-shopping_list.dto';
 import { UpdateShoppingListDto } from './dto/update-shopping_list.dto';
 import { ShoppingList } from './schema/shopping_list.schema';
 import { JwtService } from '@nestjs/jwt';
+import { InsertIngredientsShoppingListDto } from './dto/insert-ingredient-shopping_list.dto';
 
 @Injectable()
 export class ShoppingListService {
@@ -16,9 +17,49 @@ export class ShoppingListService {
 
   async upsertShoppingList(upsertShoppingListDto: UpsertShoppingListDto) {
 
-    const shoppingListFound = await this.shoppingListModel.find({'ingredients.ingredient':'63d0f9903dccc038d38d416c'});
-    return shoppingListFound;
-    // const shoppingListUpdated = await this.shoppingListModel.findOneAndUpdate();
+    const shoppingListExisting = await this.shoppingListModel.findOne({_id:upsertShoppingListDto._id})
+      .populate({ path: 'ingredients._id' })
+      .setOptions({ sanitizeFilter: true })
+      .exec();
+
+    
+
+      if (shoppingListExisting) {
+      console.log("Logged user already has a shopping list in DB:" + shoppingListExisting);
+
+      let {ingredients} = shoppingListExisting;
+      let insertIngredientsDto: InsertIngredientsShoppingListDto = {ingredients}
+
+      upsertShoppingListDto.ingredients.forEach((obj)=>{
+        
+        const foundIngredient = insertIngredientsDto.ingredients.some(el => el.ingredient === obj.ingredient);
+
+        if (foundIngredient) {
+          //Ingredient found: update the ingredient into insertIngredientsDto 
+          for (let i = 0; i < insertIngredientsDto.ingredients.length; i++) {
+
+            if (insertIngredientsDto.ingredients[i].ingredient == obj.ingredient) {
+              insertIngredientsDto.ingredients[i].quantity = insertIngredientsDto.ingredients[i].quantity + obj.quantity;
+            }
+          } 
+        }else {
+          //No Ingredient found: push insertIngredientsDto with new ingredient data
+          insertIngredientsDto.ingredients.push(obj);
+          console.log("Add new ingredient: " + obj.ingredient);
+        }
+      })
+
+      //Update shopping list
+      await this.shoppingListModel.findByIdAndUpdate(shoppingListExisting._id,insertIngredientsDto);
+      console.log("Shopping list updated");
+      return insertIngredientsDto;
+
+    }else{
+      //Create shopping list
+      const newShoppingList = new this.shoppingListModel(upsertShoppingListDto);
+      console.log("New shopping list created: " + newShoppingList);
+      return await newShoppingList.save();
+    }
 
   }
 
@@ -47,12 +88,14 @@ export class ShoppingListService {
 
   }
 
-  update(id: number, updateShoppingListDto: UpdateShoppingListDto) {
-    return `This action updates a #${id} shoppingList`;
+  async update(id: number, updateShoppingListDto: UpdateShoppingListDto | InsertIngredientsShoppingListDto) {
+    const updatedShoppingList = await this.shoppingListModel.findByIdAndUpdate(id,updateShoppingListDto);
+    return updatedShoppingList;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} shoppingList`;
+  async remove(id: number) {
+    const removedShoppingList = await this.shoppingListModel.findByIdAndDelete(id);
+    return removedShoppingList;
   }
 }
 

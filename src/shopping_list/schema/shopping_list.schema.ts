@@ -7,11 +7,8 @@ export class ShoppingList {
 	@Prop({type: mongoose.Types.ObjectId, ref: 'User'})
 	_id: ObjectId;
 
-	@Prop(Array<any>)
-	ingredients: [{
-		ingredient: {type: mongoose.Types.ObjectId, ref:'Ingredient'},
-		quantity: number
-	}] 
+	@Prop({type: mongoose.Types.ObjectId, ref:'Ingredient'})
+	ingredients: any[] 
 }
 
 

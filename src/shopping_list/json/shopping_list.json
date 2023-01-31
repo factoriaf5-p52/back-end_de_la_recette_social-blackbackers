@@ -3,11 +3,11 @@
   "ingredients": [
     {
       "ingredient": "63d0f9903dccc038d38d416c",
-      "quantity": "300"
+      "quantity": 300
     },
     {
       "ingredient": "63d27fbd13516dc7a0e34840",
-      "quantity": "2"
+      "quantity": 2
     }
   ]
 }
