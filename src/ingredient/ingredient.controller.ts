@@ -35,6 +35,9 @@ export class IngredientController {
     return await this.ingredientService.findOne(id);
   }
 
+  @ApiBearerAuth()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch('modify/:id')
   async update(@Param('id') id: string, @Body() updateIngredientDto: UpdateIngredientDto, @Res() res: Response) {
     const updatedIngredient = await this.ingredientService.update(id, updateIngredientDto);
