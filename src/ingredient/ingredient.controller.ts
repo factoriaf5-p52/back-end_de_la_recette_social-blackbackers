@@ -44,6 +44,10 @@ export class IngredientController {
     });
   }
 
+  //Pending: only author can do that
+  @ApiBearerAuth()
+  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('delete/:id')
   async remove(@Param('id') id: string, @Res() res: Response) {
     const deletededIngredient = await this.ingredientService.remove(id);

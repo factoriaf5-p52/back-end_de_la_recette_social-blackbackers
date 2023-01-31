@@ -16,9 +16,4 @@ export class CreateGroupDto {
     @ApiProperty( {example: 'Admin_ID number'})
 	@IsDefined()
 	admin_id: string;
-
-    @ApiProperty( {example: 'Member_user name '})
-	@IsDefined()
-	@IsString()
-	member_username: string;
 }
